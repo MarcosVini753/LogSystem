@@ -1,4 +1,4 @@
-project "App"
+project "LogSystem-App"
    kind "ConsoleApp"
    language "C++"
    cppdialect "C++20"
@@ -12,12 +12,12 @@ project "App"
       "Source",
 
 	  -- Include Core
-	  "../Core/Source"
+	  "../LogSystem-Core/Source"
    }
 
    links
    {
-      "Core"
+      "LogSystem-Core"
    }
 
    targetdir ("../Binaries/" .. OutputDir .. "/%{prj.name}")
