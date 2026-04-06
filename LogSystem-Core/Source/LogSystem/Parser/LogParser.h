@@ -5,8 +5,7 @@
 
 namespace logsystem {
 
-class LogParser
-{
+class LogParser {
 public:
     // retorna nullopt se a linha for inválida
     std::optional<Log> ParseLine(std::string_view line) const;
