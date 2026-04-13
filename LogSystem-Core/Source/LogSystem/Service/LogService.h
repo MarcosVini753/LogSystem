@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <string_view>
 #include "LogSystem/Parser/LogParser.h"
 #include "LogSystem/Database/Database.h"
 #include "LogSystem/Database/LogRepository.h"
