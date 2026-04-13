@@ -20,7 +20,7 @@ void Cli::Run() {
 
         // stub: por enquanto processa como se fosse uma linha de log
         auto status = m_Service.ProcessLine(line);
-        if (status == LogService::ProcessLineStatus::Processed)
+        if (status == ProcessLineStatus::Processed)
             std::cout << "OK\n";
         else
             std::cout << "Ignorado (linha inválida)\n";
