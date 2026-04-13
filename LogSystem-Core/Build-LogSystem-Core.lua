@@ -5,11 +5,16 @@ project "LogSystem-Core"
    targetdir "Binaries/%{cfg.buildcfg}"
    staticruntime "off"
 
-   files { "Source/**.h", "Source/**.cpp" }
+   files {
+    "Source/**.h",
+    "Source/**.cpp",
+    "../Vendor/sqlite/sqlite3.c" 
+   }
 
    includedirs
    {
-      "Source"
+      "Source",
+      "../Vendor/sqlite"
    }
 
    targetdir ("../Binaries/" .. OutputDir .. "/%{prj.name}")
