@@ -17,8 +17,7 @@ void LogRepository::InitSchema() {
 
     char* errMsg = nullptr;
     int rc = sqlite3_exec(m_Db.Handle(), sql, nullptr, nullptr, &errMsg);
-    if (rc != SQLITE_OK)
-    {
+    if (rc != SQLITE_OK){
         std::string msg = errMsg ? errMsg : "unknown sqlite error";
         sqlite3_free(errMsg);
         throw DatabaseError("sqlite3_exec failed: " + msg);
