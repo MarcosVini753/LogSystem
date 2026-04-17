@@ -5,12 +5,14 @@
 
 namespace logsystem {
 
+using TimestampUtc = std::chrono::time_point<std::chrono::system_clock, std::chrono::milliseconds>;
+
 enum class LogLevel : uint8_t {
     Trace, Debug, Info, Warn, Error, Fatal
 };
 
 struct Log {
-    std::chrono::time_point<std::chrono::system_clock, std::chrono::milliseconds> timestampUtc;
+    TimestampUtc timestampUtc;
     LogLevel level;
     std::string message;
 };
