@@ -9,6 +9,8 @@ Binaries/
 *.sln
 *.log
 Makefile
+.codex
+.vscode/c_cpp_properties.json
 
 # Exclude
 !Vendor/Binaries
