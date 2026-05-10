@@ -37,9 +37,9 @@ void LogRepository::InitSchema() {
     const char* sql =
         "CREATE TABLE IF NOT EXISTS logs ("
         "id INTEGER PRIMARY KEY,"
-        "timestamp TEXT,"
-        "level TEXT,"
-        "message TEXT"
+        "timestamp TEXT NOT NULL,"
+        "level TEXT NOT NULL CHECK(level IN ('TRACE', 'DEBUG', 'INFO', 'WARN', 'ERROR', 'FATAL')),"
+        "message TEXT NOT NULL"
         ");";
 
     char* errMsg = nullptr;
