@@ -1,4 +1,6 @@
 #pragma once
+#include <vector>
+
 #include "LogSystem/Model/Log.h"
 
 namespace logsystem {
@@ -11,6 +13,7 @@ public:
 
     void InitSchema();
     void Insert(const Log& log);
+    void InsertMany(const std::vector<Log>& logs);
 
 private:
     Database& m_Db;
