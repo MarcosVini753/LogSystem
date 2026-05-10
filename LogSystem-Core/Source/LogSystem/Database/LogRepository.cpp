@@ -11,12 +11,12 @@
 namespace logsystem {
 namespace {
 
-void ThrowSqliteError(sqlite3* db, const std::string& operation) {
+void ThrowSqliteError(sqlite3* db, const std::string& context) {
     const char* message = db ? sqlite3_errmsg(db) : "database is not open";
-    throw DatabaseError(operation + " failed: " + message);
+    throw DatabaseError(context + " failed: " + message);
 }
 
-void BindText(sqlite3* db, sqlite3_stmt* statement, int index, const std::string& value) {
+void BindText(sqlite3* db, sqlite3_stmt* statement, int index, const std::string& fieldName, const std::string& value) {
     const int rc = sqlite3_bind_text(
         statement,
         index,
@@ -26,7 +26,7 @@ void BindText(sqlite3* db, sqlite3_stmt* statement, int index, const std::string
     );
 
     if (rc != SQLITE_OK)
-        ThrowSqliteError(db, "sqlite3_bind_text");
+        ThrowSqliteError(db, "LogRepository::Insert bind " + fieldName);
 }
 
 } // namespace
@@ -63,20 +63,20 @@ void LogRepository::Insert(const Log& log) {
     sqlite3_stmt* rawStatement = nullptr;
     const int prepareRc = sqlite3_prepare_v2(db, sql, -1, &rawStatement, nullptr);
     if (prepareRc != SQLITE_OK)
-        ThrowSqliteError(db, "sqlite3_prepare_v2");
+        ThrowSqliteError(db, "LogRepository::Insert prepare");
 
     std::unique_ptr<sqlite3_stmt, decltype(&sqlite3_finalize)> statement(rawStatement, sqlite3_finalize);
 
     const std::string timestamp = FormatTimestampToIso8601(log.timestampUtc);
     const std::string level = LogLevelToString(log.level);
 
-    BindText(db, statement.get(), 1, timestamp);
-    BindText(db, statement.get(), 2, level);
-    BindText(db, statement.get(), 3, log.message);
+    BindText(db, statement.get(), 1, "timestamp", timestamp);
+    BindText(db, statement.get(), 2, "level", level);
+    BindText(db, statement.get(), 3, "message", log.message);
 
     const int stepRc = sqlite3_step(statement.get());
     if (stepRc != SQLITE_DONE)
-        ThrowSqliteError(db, "sqlite3_step");
+        ThrowSqliteError(db, "LogRepository::Insert execute");
 }
 
 }
