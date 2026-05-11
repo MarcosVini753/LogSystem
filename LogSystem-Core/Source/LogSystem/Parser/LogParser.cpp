@@ -30,7 +30,12 @@ std::optional<Log> LogParser::ParseLine(std::string_view line) const {
     return Log {
         .timestampUtc = *timestampUtc,
         .level = *level,
-        .message = std::string(messageText)
+        .message = std::string(messageText),
+        .source = "unknown",
+        .service = "",
+        .environment = "",
+        .rawLine = std::string(line),
+        .metadata = "{}"
     };
 }
 

@@ -15,6 +15,11 @@ struct Log {
     TimestampUtc timestampUtc;
     LogLevel level;
     std::string message;
+    std::string source;
+    std::string service;
+    std::string environment;
+    std::string rawLine;
+    std::string metadata;
 };
 
 }
