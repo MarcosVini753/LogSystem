@@ -18,4 +18,24 @@ ProcessLineStatus LogService::ProcessLine(std::string_view line) {
     return ProcessLineStatus::Processed;
 }
 
+ProcessLinesResult LogService::ProcessLines(const std::vector<std::string>& lines) {
+    ProcessLinesResult result;
+    std::vector<Log> validLogs;
+    validLogs.reserve(lines.size());
+
+    for (const std::string& line : lines) {
+        auto log = m_Parser.ParseLine(line);
+        if (!log) {
+            ++result.ignoredInvalid;
+            continue;
+        }
+
+        validLogs.push_back(*log);
+    }
+
+    m_Repo.InsertMany(validLogs);
+    result.processed = validLogs.size();
+    return result;
 }
+
+} 

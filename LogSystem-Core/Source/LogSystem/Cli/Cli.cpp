@@ -23,7 +23,7 @@ void Cli::Run() {
         if (status == ProcessLineStatus::Processed)
             std::cout << "OK\n";
         else
-            std::cout << "Ignorado (linha inválida)\n";
+            std::cout << "Ignorado: formato inválido. Use YYYY-MM-DDTHH:MM:SS.mmmZ LEVEL MESSAGE\n";
     }
 }
 

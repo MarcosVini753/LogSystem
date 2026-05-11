@@ -1,12 +1,25 @@
 #pragma once
+#include <chrono>
+#include <cstdint>
 #include <string>
 
 namespace logsystem {
 
+using TimestampUtc = std::chrono::time_point<std::chrono::system_clock, std::chrono::milliseconds>;
+
+enum class LogLevel : uint8_t {
+    Trace, Debug, Info, Warn, Error, Fatal
+};
+
 struct Log {
-    std::string timestamp; // por enquanto string; depois pode virar um tipo próprio
-    std::string level;     // "ERROR", "INFO", etc.
+    TimestampUtc timestampUtc;
+    LogLevel level;
     std::string message;
+    std::string source;
+    std::string service;
+    std::string environment;
+    std::string rawLine;
+    std::string metadata;
 };
 
 }
